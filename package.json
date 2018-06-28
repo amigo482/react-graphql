@@ -125,7 +125,7 @@
           "alias": {
             "_constants": "./src/actions/constants",
             "_actions": "./src/actions",
-            "_api": "./src/api",
+            "_environment": "./src/environment",
             "_sagas": "./src/sagas",
             "_config": "./src/config",
             "_reducers": "./src/reducers",

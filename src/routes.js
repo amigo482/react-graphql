@@ -1,4 +1,4 @@
-import HomePage from '_pages/HomePage';
+import Campaigns from '_pages/Campaigns';
 import UserInfoPage from '_pages/UserInfoPage';
 import NotFoundPage from '_pages/NotFoundPage';
 import LocalizationPage from '_pages/LocalizationPage';
@@ -11,7 +11,7 @@ export default [
       {
         path: '/',
         exact: true,
-        component: HomePage,
+        component: Campaigns,
       },
       {
         path: '/users/:id',
