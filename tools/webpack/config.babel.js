@@ -135,7 +135,8 @@ module.exports = {
           plugins: [
             'react-hot-loader/babel',
             'loadable-components/babel',
-            'lodash'
+            'lodash',
+            'relay'
           ],
           env: { production: { plugins: ['transform-remove-console'] } }
         }

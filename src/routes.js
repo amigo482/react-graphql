@@ -4,8 +4,6 @@ import NotFoundPage from '_pages/NotFoundPage';
 import LocalizationPage from '_pages/LocalizationPage';
 import App from './app';
 
-import { fetchUsers } from '_sagas/users';
-
 export default [
   {
     component: App,
@@ -14,9 +12,6 @@ export default [
         path: '/',
         exact: true,
         component: HomePage,
-        sagasToRun: [
-          fetchUsers,
-        ],
       },
       {
         path: '/users/:id',
