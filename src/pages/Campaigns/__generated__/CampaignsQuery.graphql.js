@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 92fc413ebcd52b76f04eb25a4eff578c
+ * @relayHash 5c892d404c4c6f87fb3dab25b3a57558
  */
 
 /* eslint-disable */
@@ -9,6 +9,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+type Campaign_campaign$ref = any;
 export type CampaignsQueryVariables = {|
   first: number
 |};
@@ -16,7 +17,8 @@ export type CampaignsQueryResponse = {|
   +campaigns: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +name: ?string
+        +name: ?string,
+        +$fragmentRefs: Campaign_campaign$ref,
       |}
     |}>
   |}
@@ -32,9 +34,28 @@ query CampaignsQuery(
     edges {
       node {
         name
+        ...Campaign_campaign
         id
+        __typename
       }
+      cursor
     }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+
+fragment Campaign_campaign on Campaign {
+  id
+  deletable
+  brand {
+    ... on Actor {
+      avatarUrl
+      name
+    }
+    id
   }
 }
 */
@@ -48,18 +69,56 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first",
-    "type": "Int"
-  }
-],
-v2 = {
+v1 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "cursor",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "pageInfo",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "endCursor",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "hasNextPage",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
   "args": null,
   "storageKey": null
 };
@@ -68,8 +127,19 @@ return {
   "operationKind": "query",
   "name": "CampaignsQuery",
   "id": null,
-  "text": "query CampaignsQuery(\n  $first: Int!\n) {\n  campaigns(first: $first) {\n    edges {\n      node {\n        name\n        id\n      }\n    }\n  }\n}\n",
-  "metadata": {},
+  "text": "query CampaignsQuery(\n  $first: Int!\n) {\n  campaigns(first: $first) {\n    edges {\n      node {\n        name\n        ...Campaign_campaign\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Campaign_campaign on Campaign {\n  id\n  deletable\n  brand {\n    ... on Actor {\n      avatarUrl\n      name\n    }\n    id\n  }\n}\n",
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "campaigns"
+        ]
+      }
+    ]
+  },
   "fragment": {
     "kind": "Fragment",
     "name": "CampaignsQuery",
@@ -79,10 +149,10 @@ return {
     "selections": [
       {
         "kind": "LinkedField",
-        "alias": null,
-        "name": "campaigns",
+        "alias": "campaigns",
+        "name": "__Campaigns_campaigns_connection",
         "storageKey": null,
-        "args": v1,
+        "args": null,
         "concreteType": "CampaignConnection",
         "plural": false,
         "selections": [
@@ -104,11 +174,19 @@ return {
                 "concreteType": "Campaign",
                 "plural": false,
                 "selections": [
+                  v1,
+                  {
+                    "kind": "FragmentSpread",
+                    "name": "Campaign_campaign",
+                    "args": null
+                  },
                   v2
                 ]
-              }
+              },
+              v3
             ]
-          }
+          },
+          v4
         ]
       }
     ]
@@ -123,7 +201,14 @@ return {
         "alias": null,
         "name": "campaigns",
         "storageKey": null,
-        "args": v1,
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "first",
+            "variableName": "first",
+            "type": "Int"
+          }
+        ],
         "concreteType": "CampaignConnection",
         "plural": false,
         "selections": [
@@ -145,24 +230,64 @@ return {
                 "concreteType": "Campaign",
                 "plural": false,
                 "selections": [
-                  v2,
+                  v1,
+                  v5,
                   {
                     "kind": "ScalarField",
                     "alias": null,
-                    "name": "id",
+                    "name": "deletable",
                     "args": null,
                     "storageKey": null
-                  }
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "brand",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Brand",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "avatarUrl",
+                        "args": null,
+                        "storageKey": null
+                      },
+                      v1,
+                      v5
+                    ]
+                  },
+                  v2
                 ]
-              }
+              },
+              v3
             ]
-          }
+          },
+          v4
         ]
+      },
+      {
+        "kind": "LinkedHandle",
+        "alias": null,
+        "name": "campaigns",
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "first",
+            "variableName": "first",
+            "type": "Int"
+          }
+        ],
+        "handle": "connection",
+        "key": "Campaigns_campaigns",
+        "filters": null
       }
     ]
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0fc0ba2f62e40300c3a44c18fc2fb4dc';
+(node/*: any*/).hash = 'e823fb527f726feb29d920544de0be60';
 module.exports = node;

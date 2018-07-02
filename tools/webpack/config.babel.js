@@ -227,6 +227,7 @@ module.exports = {
       _images: path.resolve(process.cwd(), 'src/assets/images'),
       _selectors: path.resolve(process.cwd(), 'src/selectors'),
       _localization: path.resolve(process.cwd(), 'src/localization'),
+      _mutations: path.resolve(process.cwd(), 'src/mutations'),
     },
     extensions: ['.js', '.jsx', '.json']
   },

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 import {
@@ -6,6 +8,7 @@ import {
 } from 'react-relay';
 
 import environment from '_environment';
+import Campaign from './Campaign';
 
 const first = 50;
 
@@ -16,10 +19,11 @@ const Campaigns = () => (
       environment={environment}
       query={graphql`
         query CampaignsQuery($first: Int!) {
-          campaigns(first: $first) {
+          campaigns(first: $first) @connection(key: "Campaigns_campaigns") {
             edges {
               node {
                 name
+                ...Campaign_campaign
               }
             }
           }
@@ -30,7 +34,13 @@ const Campaigns = () => (
         if (error) {
           return <div>{error.message}</div>;
         } else if (props) {
-          return props;
+          return (
+            <ul>
+              {
+                props.campaigns.edges.map((element, index) => <Campaign key={index} campaign={element.node} />)
+              }
+            </ul>
+          );
         }
         return <div>Loading</div>;
       }}

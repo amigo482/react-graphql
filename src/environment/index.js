@@ -14,8 +14,7 @@ function fetchQuery(
   return fetch('https://test-api.insense.pro/graphql', {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'content-type': 'application/json',
       authorization: `Bearer ${jwt}`,
     },
     body: JSON.stringify({

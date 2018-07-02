@@ -119,6 +119,7 @@
       "loadable-components/babel",
       "dynamic-import-node",
       "lodash",
+      "relay",
       [
         "module-resolver",
         {
@@ -136,7 +137,8 @@
             "_styles": "./src/styles",
             "_images": "./src/assets/images",
             "_localization": "./src/localization",
-            "_selectors": "./src/selectors"
+            "_selectors": "./src/selectors",
+            "_mutations": "./src/mutations"
           }
         }
       ]
@@ -264,6 +266,7 @@
   "dependencies": {
     "@babel/register": "^7.0.0-beta.46",
     "axios": "^0.18.0",
+    "babel-relay-plugin": "^0.11.0",
     "chalk": "^2.4.1",
     "compression": "^1.7.2",
     "cookie-parser": "^1.4.3",
@@ -271,6 +274,7 @@
     "helmet": "^3.12.0",
     "history": "^4.7.2",
     "hpp": "^0.2.2",
+    "http-proxy-middleware": "^0.18.0",
     "js-cookie": "^2.2.0",
     "loadable-components": "^1.4.0",
     "lodash": "^4.17.10",
@@ -293,7 +297,8 @@
     "relay-runtime": "^1.6.0",
     "reselect": "^3.0.1",
     "serialize-javascript": "^1.5.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "uuid": "^3.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.46",

@@ -26,7 +26,11 @@ import assets from '../public/webpack-assets';
 import { port } from './config';
 
 const app = express();
+const proxy = require('http-proxy-middleware');
 
+const graphql = 'https://test-api.insense.pro';
+
+app.use('/graphql', proxy({ target: graphql, changeOrigin: true }));
 // Use helmet to secure Express with various HTTP headers
 app.use(helmet());
 // Prevent HTTP parameter pollution.
