@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2e18a8d7d995d61ac0182b9d8b3fb4a4
+ * @relayHash e610006d3df5c24819ad65c3d3a04f63
  */
 
 /* eslint-disable */
@@ -10,20 +10,28 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type List_campaigns$ref = any;
-export type CampaignsQueryVariables = {||};
-export type CampaignsQueryResponse = {|
+export type ListPaginationQueryVariables = {|
+  count?: ?number,
+  cursor?: ?string,
+  orderBy?: ?string,
+|};
+export type ListPaginationQueryResponse = {|
   +$fragmentRefs: List_campaigns$ref
 |};
 */
 
 
 /*
-query CampaignsQuery {
-  ...List_campaigns
+query ListPaginationQuery(
+  $count: Int
+  $cursor: String
+  $orderBy: String
+) {
+  ...List_campaigns_32czeo
 }
 
-fragment List_campaigns on Query {
-  campaigns(first: 2, orderBy: "name") {
+fragment List_campaigns_32czeo on Query {
+  campaigns(first: $count, after: $cursor, orderBy: $orderBy) {
     edges {
       node {
         name
@@ -54,14 +62,34 @@ fragment Campaign_campaign on Campaign {
 */
 
 const node/*: ConcreteRequest*/ = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "cursor",
+    "type": "String",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "orderBy",
+    "type": "String",
+    "defaultValue": null
+  }
+],
+v1 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v1 = {
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -71,45 +99,70 @@ v1 = {
 return {
   "kind": "Request",
   "operationKind": "query",
-  "name": "CampaignsQuery",
+  "name": "ListPaginationQuery",
   "id": null,
-  "text": "query CampaignsQuery {\n  ...List_campaigns\n}\n\nfragment List_campaigns on Query {\n  campaigns(first: 2, orderBy: \"name\") {\n    edges {\n      node {\n        name\n        ...Campaign_campaign\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Campaign_campaign on Campaign {\n  id\n  deletable\n  brand {\n    ... on Actor {\n      avatarUrl\n      name\n    }\n    id\n  }\n}\n",
+  "text": "query ListPaginationQuery(\n  $count: Int\n  $cursor: String\n  $orderBy: String\n) {\n  ...List_campaigns_32czeo\n}\n\nfragment List_campaigns_32czeo on Query {\n  campaigns(first: $count, after: $cursor, orderBy: $orderBy) {\n    edges {\n      node {\n        name\n        ...Campaign_campaign\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Campaign_campaign on Campaign {\n  id\n  deletable\n  brand {\n    ... on Actor {\n      avatarUrl\n      name\n    }\n    id\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "CampaignsQuery",
+    "name": "ListPaginationQuery",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": [],
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "FragmentSpread",
         "name": "List_campaigns",
-        "args": null
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "count",
+            "variableName": "count",
+            "type": null
+          },
+          {
+            "kind": "Variable",
+            "name": "cursor",
+            "variableName": "cursor",
+            "type": null
+          },
+          {
+            "kind": "Variable",
+            "name": "orderBy",
+            "variableName": "orderBy",
+            "type": null
+          }
+        ]
       }
     ]
   },
   "operation": {
     "kind": "Operation",
-    "name": "CampaignsQuery",
-    "argumentDefinitions": [],
+    "name": "ListPaginationQuery",
+    "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "campaigns",
-        "storageKey": "campaigns(first:2,orderBy:\"name\")",
+        "storageKey": null,
         "args": [
           {
-            "kind": "Literal",
+            "kind": "Variable",
+            "name": "after",
+            "variableName": "cursor",
+            "type": "String"
+          },
+          {
+            "kind": "Variable",
             "name": "first",
-            "value": 2,
+            "variableName": "count",
             "type": "Int"
           },
           {
-            "kind": "Literal",
+            "kind": "Variable",
             "name": "orderBy",
-            "value": "name",
+            "variableName": "orderBy",
             "type": "String"
           }
         ],
@@ -134,8 +187,8 @@ return {
                 "concreteType": "Campaign",
                 "plural": false,
                 "selections": [
-                  v0,
                   v1,
+                  v2,
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -159,8 +212,8 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      v0,
-                      v1
+                      v1,
+                      v2
                     ]
                   },
                   {
@@ -214,15 +267,21 @@ return {
         "name": "campaigns",
         "args": [
           {
-            "kind": "Literal",
+            "kind": "Variable",
+            "name": "after",
+            "variableName": "cursor",
+            "type": "String"
+          },
+          {
+            "kind": "Variable",
             "name": "first",
-            "value": 2,
+            "variableName": "count",
             "type": "Int"
           },
           {
-            "kind": "Literal",
+            "kind": "Variable",
             "name": "orderBy",
-            "value": "name",
+            "variableName": "orderBy",
             "type": "String"
           }
         ],
@@ -235,5 +294,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a93bc1549c3aa74014904e60add88d8f';
+(node/*: any*/).hash = '3534120c392d2e09c5edac24ada48dd2';
 module.exports = node;

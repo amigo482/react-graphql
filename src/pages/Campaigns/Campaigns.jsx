@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import Helmet from 'react-helmet';
 import {
   QueryRenderer,
@@ -8,44 +8,37 @@ import {
 } from 'react-relay';
 
 import environment from '_environment';
-import Campaign from './Campaign';
 
-const first = 50;
+import List from './List';
 
-const Campaigns = () => (
-  <Fragment>
-    <Helmet title="Home" />
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query CampaignsQuery($first: Int!) {
-          campaigns(first: $first) @connection(key: "Campaigns_campaigns") {
-            edges {
-              node {
-                name
-                ...Campaign_campaign
-              }
+class Campaigns extends Component {
+  render() {
+    return (
+      <Fragment>
+        <Helmet title="Campaigns" />
+        <QueryRenderer
+          environment={environment}
+          query={graphql`
+            query CampaignsQuery {
+              ...List_campaigns
             }
-          }
-        }
-      `}
-      variables={{ first }}
-      render={({ error, props }) => {
-        if (error) {
-          return <div>{error.message}</div>;
-        } else if (props) {
-          return (
-            <ul>
-              {
-                props.campaigns.edges.map((element, index) => <Campaign key={index} campaign={element.node} />)
-              }
-            </ul>
-          );
-        }
-        return <div>Loading</div>;
-      }}
-    />
-  </Fragment>
-);
+          `}
+          render={({ error, props }) => {
+            if (error) {
+              return <div>{error.message}</div>;
+            } else if (props) {
+              return (
+                <ul>
+                  <List campaigns={props} />
+                </ul>
+              );
+            }
+            return <div>Loading</div>;
+          }}
+        />
+      </Fragment>
+    );
+  }
+}
 
 export default Campaigns;
